@@ -30,7 +30,7 @@ tasks:
     type: io.kestra.plugin.scripts.python.Script
     containerImage: python:3.11-alpine
     inputFiles:
-      data.json: "{{outputs.extract.uri}}"
+      data.json: "{{outputs.extract.outputFiles['data.json']}}"
     outputFiles:
       - "*.json"
     env:
