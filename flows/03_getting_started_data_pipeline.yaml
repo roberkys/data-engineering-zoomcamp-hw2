@@ -11,26 +11,14 @@ inputs:
 
 tasks:
   - id: extract
-    type: io.kestra.plugin.scripts.python.Script
-    taskRunner:
-      type: io.kestra.plugin.scripts.runner.docker.Docker
-      networkMode: host
-    containerImage: python:3.11-slim
-    dependencies:
-      - requests
-    script: |
-      import requests
-      response = requests.get("https://dummyjson.com/products")
-      with open("data.json", "w") as f:
-        f.write(response.text)
-    outputFiles:
-      - data.json
+    type: io.kestra.plugin.core.http.Download
+    uri: https://dummyjson.com/products
 
   - id: transform
     type: io.kestra.plugin.scripts.python.Script
     containerImage: python:3.11-alpine
     inputFiles:
-      data.json: "{{outputs.extract.outputFiles['data.json']}}"
+      data.json: "{{outputs.extract.uri}}"
     outputFiles:
       - "*.json"
     env:

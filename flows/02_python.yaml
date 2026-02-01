@@ -9,6 +9,7 @@ tasks:
     taskRunner:
       type: io.kestra.plugin.scripts.runner.docker.Docker
     containerImage: python:slim
+    pythonVersion: "3.11"
     dependencies:
       - requests
       - kestra
